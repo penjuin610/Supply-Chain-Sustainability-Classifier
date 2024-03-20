@@ -46,11 +46,11 @@ pip install numpy pandas transformers torch scikit-learn keras
 
 ### Contributors
 
-- Alan Liang
-- Sihan Liu
-- Cullen Jiang
-- N'guessan, Komenan
-- AICP Team Shculich
+- Alan Liang(AICP Team Shculich)
+- Sihan Liu(AICP Team Shculich)
+- Cullen Jiang(AICP Team Shculich)
+- N'guessan, Komenan(AICP Team Shculich)
+  
 
 ### License
 
