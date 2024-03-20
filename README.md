@@ -6,27 +6,27 @@ This repository contains the code and resources for an analytical model designed
 
 ### Files and Directories
 
-- `my_trained_model.h5`: Trained machine learning model saved in HDF5 format.
-  
-- `label_encoder.pkl`: Label encoder used for encoding target labels during model training.
-
-- `trainmodel.ipynb`: Jupyter Notebook for training the machine learning model.
-
-- `aicp_final-version.ipynb`: Jupyter Notebook for the entire pipeline, from data extraction to model evaluation.
-
 - `download_files.ipynb`: Jupyter Notebook for automatically downloading files from a list of URLs.
 
-- `cleaned_texts.csv`: Preprocessed text data after cleaning and preprocessing steps.
+- `my_trained_model.h5`: This file contains the trained machine learning model saved in the Hierarchical Data Format (HDF5) format. It can be loaded and used for making predictions on new text data.
+  
+- `label_encoder.pkl`: This file contains the label encoder used to encode the target labels during model training. It is necessary for decoding the predicted labels back to their original form.
 
-- `bert_features_matrix.npy`: BERT-encoded features extracted from preprocessed text data.
+- `trainmodel.ipynb`: This Jupyter Notebook file contains the code used to train the machine learning model. It includes steps for data preprocessing, feature extraction, model definition, training, and evaluation.
 
-- `reduced_bert_features.npy`: BERT-encoded features reduced to lower dimensions using PCA.
+- `aicp_final-version.ipynb`: This Jupyter Notebook file contains the main code for running the entire pipeline, from data extraction to model evaluation. It includes all the necessary steps to preprocess the data, extract features, and make predictions using the trained model.
+
+- `cleaned_texts.csv`: This CSV file contains the preprocessed text data after cleaning and preprocessing steps. It serves as the input for feature extraction and model training.
+
+- `bert_features_matrix.npy`: This NumPy array file contains the BERT-encoded featuhttps://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntaxres extracted from the preprocessed text data. It is used as input for training the machine learning model.
+
+- `reduced_bert_features.npy`: This NumPy array file contains the BERT-encoded features reduced to lower dimensions using Principal Component Analysis (PCA). It can be used as an alternative input for training the machine learning model.
 
 ### Usage
 
-1. **Training the Model**: Run the code in `trainmodel.ipynb` to train the machine learning model using preprocessed text data.
+1. **Training the Model**: Run the code in `trainmodel.ipynb` to train the machine learning model using preprocessed text data.Ensure that the `cleaned_texts.csv` file containing preprocessed text data is available in the directory.
 
-2. **Generating Predictions**: Use `aicp_final-version.ipynb` to run the entire pipeline, including data preprocessing, feature extraction, model training, and prediction generation.
+2. **Generating Predictions**: Use the `aicp_final-version.ipynb` notebook to run the entire pipeline, including data preprocessing, feature extraction, model training, and prediction generation. Make sure to have the trained model (`my_trained_model.h5`) and label encoder (`label_encoder.pkl`) files available.
 
 3. **Downloading Files**: Use `download_files.ipynb` to automatically download files from a list of URLs provided in an Excel file.
 
