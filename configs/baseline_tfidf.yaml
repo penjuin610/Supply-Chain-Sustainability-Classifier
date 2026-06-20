@@ -1,0 +1,17 @@
+random_seed: 42
+target_column: final_level
+text_column: clean_text
+test_size: 0.2
+
+tfidf:
+  lowercase: true
+  ngram_range: [1, 2]
+  min_df: 1
+  max_df: 0.95
+  sublinear_tf: true
+
+model:
+  type: logistic_regression
+  max_iter: 2000
+  class_weight: balanced
+

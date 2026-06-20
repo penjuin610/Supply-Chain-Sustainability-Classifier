@@ -1,0 +1,3 @@
+evidence_id,document_id,page_number,section_title,evidence_text,local_level,evidence_type,keyword_hits,rationale,annotator,review_status
+EV_001,RFP_001,18,Evaluation Criteria,"Sustainability accounts for 15% of the total evaluation score.",4,weighted criteria,"sustainability;15%;evaluation","Explicit scoring weight for sustainability",Alan,approved
+

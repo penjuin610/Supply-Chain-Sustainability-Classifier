@@ -1,60 +1,261 @@
-# Supply-Chain-Sustainability-Classifier
+# Sustainable Public Procurement NLP Pipeline
 
-**Analytical Model for Text Data Analysis**
+Applied NLP project for analyzing public procurement documents and classifying the strength of sustainability requirements in RFP/RFQ tender files.
 
-This repository contains the code and resources for an analytical model designed to analyze text data. The model goes through several steps, including data extraction, preprocessing, feature extraction, and model training, to perform various natural language processing (NLP) tasks.
+## Project Snapshot
 
-### Files and Directories
+This project grew out of a client-facing academic-industry prototype connected to the George Weston Ltd. Centre for Sustainable Supply Chains at York University.
 
-- `download_files.ipynb`: Jupyter Notebook for automatically downloading files from a list of URLs.
+The business goal was to help public institutions answer questions like:
 
-- `my_trained_model.h5`: This file contains the trained machine learning model saved in the Hierarchical Data Format (HDF5) format. It can be loaded and used for making predictions on new text data.
-  
-- `label_encoder.pkl`: This file contains the label encoder used to encode the target labels during model training. It is necessary for decoding the predicted labels back to their original form.
+- How often does sustainability appear in procurement documents?
+- How strong are those sustainability requirements?
+- Which clauses are only aspirational, and which are mandatory?
+- How can procurement teams benchmark themselves and improve future tender drafting?
 
-- `trainmodel.ipynb`: This Jupyter Notebook file contains the code used to train the machine learning model. It includes steps for data preprocessing, feature extraction, model definition, training, and evaluation.
+The practical prototype focused on `CanadaBuys` as the main document source and combined:
 
-- `aicp_final-version.ipynb`: This Jupyter Notebook file contains the main code for running the entire pipeline, from data extraction to model evaluation. It includes all the necessary steps to preprocess the data, extract features, and make predictions using the trained model.
+- web scraping / document collection
+- PDF download automation
+- PDF text extraction
+- text cleaning
+- manual sustainability labeling
+- NLP-based classification
+- Excel / dashboard-oriented outputs
 
-- `cleaned_texts.csv`: This CSV file contains the preprocessed text data after cleaning and preprocessing steps. It serves as the input for feature extraction and model training.
+## What I Did
 
-- `bert_features_matrix.npy`: This NumPy array file contains the BERT-encoded featuhttps://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntaxres extracted from the preprocessed text data. It is used as input for training the machine learning model.
+This repository is designed to make it obvious what I actually worked on.
 
-- `reduced_bert_features.npy`: This NumPy array file contains the BERT-encoded features reduced to lower dimensions using Principal Component Analysis (PCA). It can be used as an alternative input for training the machine learning model.
+I contributed to an end-to-end workflow involving:
 
-### Usage
+- collecting procurement documents from public sources
+- downloading and organizing PDFs
+- extracting machine-readable text from procurement files
+- cleaning and normalizing text for NLP use
+- designing and applying a five-level sustainability scale
+- manually labeling sustainability-relevant content
+- experimenting with BERT-based semantic features
+- building a supervised text classification prototype
+- preparing outputs for reporting and dashboard use
+- documenting the pipeline for future handoff
 
-1. **Training the Model**: Run the code in `trainmodel.ipynb` to train the machine learning model using preprocessed text data.Ensure that the `cleaned_texts.csv` file containing preprocessed text data is available in the directory.
+## Skills Demonstrated
 
-2. **Generating Predictions**: Use the `aicp_final-version.ipynb` notebook to run the entire pipeline, including data preprocessing, feature extraction, model training, and prediction generation. Make sure to have the trained model (`my_trained_model.h5`) and label encoder (`label_encoder.pkl`) files available.
+This project demonstrates practical experience with:
 
-3. **Downloading Files**: Use `download_files.ipynb` to automatically download files from a list of URLs provided in an Excel file.
+- `Python`
+- `NLP preprocessing`
+- `PDF parsing`
+- `web scraping / document collection`
+- `regex-based text cleaning`
+- `feature engineering`
+- `TF-IDF`
+- `BERT / embeddings`
+- `supervised multiclass classification`
+- `annotation design`
+- `data pipeline thinking`
+- `model explainability`
+- `handoff / project documentation`
 
-### Dependencies
+## Business Output
 
-Ensure you have the following dependencies installed to run the code:
+The core classification task is:
 
-- Python 3.x
-- NumPy
-- pandas
-- transformers
-- torch
-- scikit-learn
-- Keras
-
-You can install the required Python packages using pip:
-
+```text
+Procurement document -> sustainability commitment level (1 to 5)
 ```
-pip install numpy pandas transformers torch scikit-learn keras
+
+### Sustainability Scale
+
+| Level | Meaning |
+|---:|---|
+| 1 | No sustainability content |
+| 2 | Sustainability mentioned, but not operationalized |
+| 3 | Certification, disclosure, or sustainability evidence requested |
+| 4 | Sustainability explicitly evaluated with score / weighting / criteria |
+| 5 | Sustainability is mandatory / pass-fail / condition of award |
+
+## Why This Problem Is Interesting
+
+This is not just a generic text classification problem.
+
+The hard parts are:
+
+- procurement PDFs are messy and inconsistent
+- important evidence may be buried in long documents
+- sustainability language can be weak, strong, weighted, or mandatory
+- labeling policy matters as much as model choice
+- explainability is critical because users need to know *why* a file was classified at a certain level
+
+## End-to-End Pipeline
+
+```text
+Public procurement source
+-> scrape metadata / collect links
+-> download PDFs
+-> extract text from native PDFs
+-> flag encrypted / scanned / OCR cases
+-> basic readable cleaning
+-> document-level and evidence-level annotation
+-> baseline NLP model
+-> predicted level + confidence + evidence export
+-> dashboard / reporting output
 ```
 
-### Contributors
+## Architecture Choice
 
-- Alan Liang (AICP Team Schulich)
-- Sihan Liu (AICP Team Schulich)
-- Cullen Jiang (AICP Team Schulich)
-- N'guessan, Komenan (AICP Team Schulich)
+The most important modeling decision is:
 
-### License
+```text
+One complete procurement document = one primary training sample
+```
 
-This project is licensed under the MIT License. Feel free to modify and distribute the code for your own purposes.
+That keeps the task aligned with the business outcome:
+
+```text
+Full RFP -> one final sustainability level
+```
+
+To support explainability, the project also tracks evidence spans:
+
+```text
+document_id, page_number, evidence_text, local_level, evidence_type
+```
+
+## Historical Prototype Context
+
+From the original project deliverables:
+
+- `5,657` procurement-related documents were scraped
+- `3,087` were English
+- `2,546` were French
+- the team manually reviewed and labeled a subset of RFP documents
+- dashboard-oriented outputs were handed over for future continuation
+
+That matters because this was not a toy exercise. It started as a real prototype with handoff expectations, imperfect data, and evolving scope.
+
+## Repository Structure
+
+```text
+.
+├── README.md
+├── PROJECT_PLAYBOOK.md
+├── requirements.txt
+├── .gitignore
+├── configs/
+│   └── baseline_tfidf.yaml
+├── data/
+│   └── annotations/
+│       ├── document_labels.template.csv
+│       ├── evidence_spans.template.csv
+│       ├── label_codebook.md
+│       └── sample_training_data.csv
+├── docs/
+│   ├── FUTURE_IMPROVEMENTS.md
+│   ├── INTERVIEW_GUIDE.md
+│   ├── PROJECT_CONTEXT.md
+│   └── REPO_EVOLUTION.md
+├── src/
+│   ├── cleaning/
+│   ├── ingestion/
+│   ├── labeling/
+│   ├── models/
+│   └── utils/
+└── tests/
+```
+
+## Quick Start
+
+### 1. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Run the minimal baseline demo
+
+This repo includes a small synthetic training dataset purely so the project can run end-to-end as a demo.
+
+```bash
+python src/models/train_baseline.py \
+  --dataset data/annotations/sample_training_data.csv \
+  --config configs/baseline_tfidf.yaml \
+  --metrics-output /tmp/sppp_baseline_metrics.json
+```
+
+### 3. Run tests
+
+```bash
+pytest -q
+```
+
+## Current State
+
+This repository is intentionally honest about maturity.
+
+What already exists here:
+
+- a clear business framing
+- annotation templates and label codebook
+- a baseline project structure
+- ingestion / cleaning / training skeletons
+- a minimal runnable demo
+- documentation for interview and future handoff
+
+What is still prototype-level:
+
+- the real historical notebooks are not yet fully migrated into `src/`
+- the production-quality annotation tables are not yet versioned here
+- OCR/table extraction is not yet implemented end-to-end
+- model evaluation on the original corpus is not yet reproduced in this repo
+
+## How I Would Explain Model Choice
+
+The original prototype explored BERT-based features because sustainability language is contextual.
+
+However, for a cleaner and more defensible repository, the recommended modeling order is:
+
+1. `TF-IDF + Logistic Regression` as the first reproducible baseline
+2. `TF-IDF + procurement lexicon features` for stronger interpretability
+3. `sentence embeddings + lightweight classifier` for semantic improvement
+4. `fine-tuned BERT` only after labels, chunking, and evaluation design are stable
+
+Why not fine-tune BERT first?
+
+- the labeled dataset is relatively small
+- procurement documents are long and need chunking
+- explainability matters
+- a simpler baseline is easier to validate and debug
+
+## Future Improvements
+
+The future roadmap is documented in [docs/FUTURE_IMPROVEMENTS.md](docs/FUTURE_IMPROVEMENTS.md).
+
+High-priority next steps:
+
+- migrate the original notebook logic into reproducible scripts
+- separate document-level labels from evidence-level labels
+- preserve page-level source linkage
+- build a proper TF-IDF benchmark on real labeled data
+- compare that benchmark against sentence embeddings
+- only then decide whether fine-tuning BERT is justified
+
+## Best Way To Read This Repository
+
+If you want the shortest path:
+
+1. Read this README
+2. Read [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md)
+3. Read [docs/FUTURE_IMPROVEMENTS.md](docs/FUTURE_IMPROVEMENTS.md)
+4. Review `src/` for the pipeline skeleton
+
+## Suggested Repository Title
+
+If the current repo name feels too narrow, a clearer title would be one of:
+
+- `sustainable-procurement-nlp-pipeline`
+- `public-procurement-sustainability-classifier`
+- `sustainable-public-procurement-nlp`
+
+Those names make the business domain and NLP scope clearer than a generic "supply chain classifier."

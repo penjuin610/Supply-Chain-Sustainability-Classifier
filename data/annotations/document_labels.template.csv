@@ -1,0 +1,3 @@
+document_id,source_file,jurisdiction,document_type,date_issued,final_level,annotator,reviewer,confidence,rationale,annotation_guideline_version
+RFP_001,example_rfp.pdf,Sample City,RFP,2025-05-01,4,Alan,Reviewer A,High,"Sustainability explicitly weighted in evaluation criteria",v1.0
+
